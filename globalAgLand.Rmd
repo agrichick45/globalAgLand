@@ -1,0 +1,108 @@
+---
+title: "AgLand"
+author: "Mandy Liesch"
+date: "3/17/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Purpose
+
+The purpose of this vignette is looking at the land use changes around the globe by different land use types using  the R Terra Package, masking, zonal statisitics, and visualizations with bivariate cholopleth maps to visualize the cropland gains and losses by country/state. 
+
+A Note on file size:
+
+`terraOptions(tempDir="F:/temp")`
+
+## R Packages
+```{r}
+
+library(biscale)
+library(cowplot)
+library(exactextractr)
+library(gdalUtils)
+library(geodata)
+library(ggplot2)
+library(rgdal)
+library(sf)
+library(terra)
+library(tidyverse)
+
+terraOptions(tempDir="F:/temp")
+```
+
+
+## Raw Data
+
+### Countries
+
+```{r}
+
+w <- world(path=tempdir())
+
+plot(w)
+
+w
+
+```
+
+
+
+### Soil Grids: Total Soil Carbon Stocks 0-30 cm
+
+[SoilGrids](soilgrids.org) is a system for global digital soil mapping that makes use of global soil profile information and covariate data to model the spatial distribution of soil properties across the globe. SoilGrids is a collections of soil property maps for the world produced using machine learning at 250 m resolution. The [Soil Grids 2.0 FAQs](https://www.isric.org/explore/soilgrids/faq-soilgrids#How_can_I_access_SoilGrids) details the file structure and downloads for both the soil grids data for soil carbon, as well as the uncertainty.
+
+This code process takes you through how to grab the WebDAV protocol modelled off of the [SoilGrids Notebook](https://git.wur.nl/isric/soilgrids/soilgrids.notebooks/-/blob/master/markdown/webdav_from_R.md), using the GDAL functionality in R.
+
+
+
+```{r, include=FALSE}
+library(rgdal)
+library(gdalUtils)
+
+link="/vsicurl/https://files.isric.org/soilgrids/latest/data/ocs/ocs_0-30cm_Q0.5.vrt"
+
+gdal_translate(link,
+    "soilC_Rast.tif",
+    co=c("TILED=YES","COMPRESS=DEFLATE","BIGTIFF=YES"),
+    verbose=TRUE)
+
+
+
+```
+
+
+```{r}
+
+scStock<-rast("soilC_Rast.tif")
+
+plot(scStock)
+
+project(scStock, w, filename="Reproj_SoilC.tif")
+
+scStock<-rast("Reproj_SoilC.tif")
+
+plot(scStock)
+
+```
+
+
+### Cropland Extent Changes
+
+The dataset represents a globally consistent cropland extent time-series at 30-m spatial resolution. Cropland defined as land used for annual and perennial herbaceous crops for human consumption, forage (including hay), and biofuel. It is on the [Global Land Analysis and Discovery](https://glad.umd.edu/dataset/croplands), on a project through the University of Maryland. 
+
+The chosen rasters downloaded are the Cropland Gain (Global_cropland_3km_netgain.tif).
+
+The net cropland extent change from 2003 to 2019 is shown as the Pixel value: 0-100, percent of cropland dynamic (loss or gain) per pixel.
+
+```{r}
+
+cropGain<-rast("Global_cropland_3km_netgain.tif")
+
+```
+
+
+
