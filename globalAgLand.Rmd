@@ -35,7 +35,7 @@ terraOptions(tempDir="F:/temp")
 ```
 
 
-## Raw Data
+## Raw Data and Preparations 
 
 ### Countries
 
@@ -59,7 +59,7 @@ This code process takes you through how to grab the WebDAV protocol modelled off
 
 
 
-```{r, include=FALSE}
+```{r, eval=FALSE}
 library(rgdal)
 library(gdalUtils)
 
@@ -75,7 +75,7 @@ gdal_translate(link,
 ```
 
 
-```{r}
+```{r, eval=FALSE}
 
 scStock<-rast("soilC_Rast.tif")
 
@@ -83,9 +83,14 @@ plot(scStock)
 
 project(scStock, w, filename="Reproj_SoilC.tif")
 
+```
+
+```{r}
+
 scStock<-rast("Reproj_SoilC.tif")
 
 plot(scStock)
+plot(w, bg="transparent", add=TRUE)
 
 ```
 
@@ -98,11 +103,36 @@ The chosen rasters downloaded are the Cropland Gain (Global_cropland_3km_netgain
 
 The net cropland extent change from 2003 to 2019 is shown as the Pixel value: 0-100, percent of cropland dynamic (loss or gain) per pixel.
 
-```{r}
+```{r, eval=FALSE}
 
 cropGain<-rast("Global_cropland_3km_netgain.tif")
+
+
+project(cropGain, scStock, filename="Reproj_cropGain.tif")
 
 ```
 
 
+```{r}
+gains<-rast("Reproj_cropGain.tif")
+
+plot(gains)
+plot(w, bg="transparent", add=TRUE)
+
+```
+
+
+## Preliminary Analysis
+
+```{r}
+
+shapeSF <- sf::st_as_sf(w)
+
+shapeSF$TotalCount<-exact_extract(scStock, shapeSF, 'count')
+shapeSF$totC_Mean<-exact_extract(scStock, shapeSF, 'mean')
+shapeSF$cropGains_Mean<-exact_extract(gains, shapeSF, 'mean')
+
+
+
+```
 
