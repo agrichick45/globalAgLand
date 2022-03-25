@@ -26,6 +26,7 @@ library(exactextractr)
 library(gdalUtils)
 library(geodata)
 library(ggplot2)
+library(ggridges)
 library(rgdal)
 library(sf)
 library(terra)
@@ -128,11 +129,35 @@ plot(w, bg="transparent", add=TRUE)
 
 shapeSF <- sf::st_as_sf(w)
 
-shapeSF$TotalCount<-exact_extract(scStock, shapeSF, 'count')
-shapeSF$totC_Mean<-exact_extract(scStock, shapeSF, 'mean')
-shapeSF$cropGains_Mean<-exact_extract(gains, shapeSF, 'mean')
+regions<-read_csv("regions.csv")
 
+shapes<-merge(shapeSF, regions, by="GID_0")
+
+shapes$TotalCount<-exact_extract(scStock, shapes, 'count')
+shapes$totC_Mean<-exact_extract(scStock, shapes, 'mean')
+shapes$cropGains_Mean<-exact_extract(gains, shapes, 'mean')
 
 
 ```
+
+### Tables by Region
+
+```{r}
+
+summary<-na.omit(shapes) 
+summary$geometry<-NULL
+
+
+sumStats <- summary %>%
+  group_by(Region) %>%
+  summarise_at(vars(totC_Mean, cropGains_Mean), list(name = mean))
+
+ggplot(summary, aes(x = cropGains_Mean, y = Region)) +
+  geom_density_ridges(scale = 4) + 
+  scale_y_discrete(expand = c(0, 0)) +     # will generally have to set the `expand` option
+  scale_x_continuous(expand = c(0, 0)) +   # for both axes to remove unneeded padding
+  coord_cartesian(clip = "off") + # to avoid clipping of the very top of the top ridgeline
+  theme_ridges()
+
+
 

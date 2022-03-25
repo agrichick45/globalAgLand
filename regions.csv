@@ -1,0 +1,232 @@
+GID_0,Region,Continent
+ATA,Antarctica,Antarctica
+ATF,Antarctica,Antarctica
+BRA,Northern South America,South America
+CAN,North America,North America
+SPM,North America,North America
+ATG,Central America,North America
+ABW,Central America,North America
+BHS,Central America,North America
+BRB,Central America,North America
+BLZ,Central America,North America
+BES,Central America,North America
+CYM,Central America,North America
+CRI,Central America,North America
+CUB,Central America,North America
+CUW,Central America,North America
+DMA,Central America,North America
+DOM,Central America,North America
+SLV,Central America,North America
+GRD,Central America,North America
+GLP,Central America,North America
+GTM,Central America,North America
+HTI,Central America,North America
+HND,Central America,North America
+JAM,Central America,North America
+MTQ,Central America,North America
+MEX,Central America,North America
+MSR,Central America,North America
+NIC,Central America,North America
+PAN,Central America,North America
+PRI,Central America,North America
+KNA,Central America,North America
+LCA,Central America,North America
+VCT,Central America,North America
+MAF,Central America,North America
+SXM,Central America,North America
+TTO,Central America,North America
+TCA,Central America,North America
+VIR,Central America,North America
+ARM,Russia,Asia
+AZE,Russia,Asia
+XCA,Central Asia,Asia
+GEO,Russia,Asia
+KAZ,Central Asia,Asia
+KGZ,Central Asia,Asia
+TJK,Central Asia,Asia
+TKM,Central Asia,Asia
+UZB,Central Asia,Asia
+BDI,East Africa,Africa
+COM,East Africa,Africa
+DJI,East Africa,Africa
+ERI,East Africa,Africa
+ETH,East Africa,Africa
+KEN,East Africa,Africa
+MDG,East Africa,Africa
+MUS,East Africa,Africa
+MYT,East Africa,Africa
+REU,East Africa,Africa
+RWA,East Africa,Africa
+SYC,East Africa,Africa
+SOM,East Africa,Africa
+SSD,East Africa,Africa
+SDN,East Africa,Africa
+UGA,East Africa,Africa
+CHN,East Asia,Asia
+HKG,East Asia,Asia
+JPN,East Asia,Asia
+MAC,East Asia,Asia
+MNG,East Asia,Asia
+PRK,East Asia,Asia
+KOR,East Asia,Asia
+TWN,East Asia,Asia
+ALB,Eastern Europe,Europe
+BLR,Eastern Europe,Europe
+BIH,Eastern Europe,Europe
+BGR,Eastern Europe,Europe
+HRV,Eastern Europe,Europe
+CYP,Eastern Europe,Europe
+CZE,Eastern Europe,Europe
+EST,Eastern Europe,Europe
+HUN,Eastern Europe,Europe
+XKO,Eastern Europe,Europe
+LVA,Eastern Europe,Europe
+LTU,Eastern Europe,Europe
+MDA,Eastern Europe,Europe
+MNE,Eastern Europe,Europe
+MKD,Eastern Europe,Europe
+XNC,Eastern Europe,Europe
+POL,Eastern Europe,Europe
+ROU,Eastern Europe,Europe
+SRB,Eastern Europe,Europe
+SVK,Eastern Europe,Europe
+SVN,Eastern Europe,Europe
+TUR,Eastern Europe,Europe
+UKR,Eastern Europe,Europe
+IDN,Indonesia,Asia
+PNG,Indonesia,Asia
+TLS,Indonesia,Asia
+BHR,Middle East,Asia
+IRN,Middle East,Asia
+IRQ,Middle East,Asia
+ISR,Middle East,Asia
+JOR,Middle East,Asia
+KWT,Middle East,Asia
+LBN,Middle East,Asia
+OMN,Middle East,Asia
+PSE,Middle East,Asia
+QAT,Middle East,Asia
+SAU,Middle East,Asia
+SYR,Middle East,Asia
+ARE,Middle East,Asia
+YEM,Middle East,Asia
+HMD,NA,
+SGS,NA,
+DZA,North Africa,Africa
+EGY,North Africa,Africa
+LBY,North Africa,Africa
+MAR,North Africa,Africa
+TUN,North Africa,Africa
+ESH,North Africa,Africa
+GRL,North America,North America
+BOL,Northern South America,South America
+COL,Northern South America,South America
+ECU,Northern South America,South America
+GUF,Northern South America,South America
+GUY,Northern South America,South America
+PER,Northern South America,South America
+SUR,Northern South America,South America
+VEN,Northern South America,South America
+ASM,Oceania,Oceania
+AUS,Oceania,Oceania
+COK,Oceania,Oceania
+FJI,Oceania,Oceania
+PYF,Oceania,Oceania
+GUM,Oceania,Oceania
+KIR,Oceania,Oceania
+FSM,Oceania,Oceania
+NCL,Oceania,Oceania
+NZL,Oceania,Oceania
+NIU,Oceania,Oceania
+MNP,Oceania,Oceania
+PLW,Oceania,Oceania
+WSM,Oceania,Oceania
+SLB,Oceania,Oceania
+TON,Oceania,Oceania
+VUT,Oceania,Oceania
+RUS,Russia,Asia
+AFG,South Asia,Asia
+BGD,South Asia,Asia
+BTN,South Asia,Asia
+IND,South Asia,Asia
+NPL,South Asia,Asia
+PAK,South Asia,Asia
+LKA,South Asia,Asia
+BRN,Southeast Asia,Asia
+KHM,Southeast Asia,Asia
+LAO,Southeast Asia,Asia
+MYS,Southeast Asia,Asia
+MMR,Southeast Asia,Asia
+PHL,Southeast Asia,Asia
+SGP,Southeast Asia,Asia
+THA,Southeast Asia,Asia
+VNM,Southeast Asia,Asia
+AGO,Southern Africa,Africa
+BWA,Southern Africa,Africa
+LSO,Southern Africa,Africa
+MWI,Southern Africa,Africa
+MOZ,Southern Africa,Africa
+NAM,Southern Africa,Africa
+ZAF,Southern Africa,Africa
+SWZ,Southern Africa,Africa
+TZA,Southern Africa,Africa
+ZMB,Southern Africa,Africa
+ZWE,Southern Africa,Africa
+ARG,Southern South America,South America
+CHL,Southern South America,South America
+FLK,Southern South America,South America
+PRY,Southern South America,South America
+URY,Southern South America,South America
+USA,North America,North America
+BEN,West Africa,Africa
+BFA,West Africa,Africa
+CPV,West Africa,Africa
+CMR,West Africa,Africa
+CAF,West Africa,Africa
+TCD,West Africa,Africa
+CIV,West Africa,Africa
+COD,West Africa,Africa
+GNQ,West Africa,Africa
+GAB,West Africa,Africa
+GMB,West Africa,Africa
+GHA,West Africa,Africa
+GIN,West Africa,Africa
+GNB,West Africa,Africa
+LBR,West Africa,Africa
+MLI,West Africa,Africa
+MRT,West Africa,Africa
+NER,West Africa,Africa
+NGA,West Africa,Africa
+COG,West Africa,Africa
+SHN,West Africa,Africa
+STP,West Africa,Africa
+SEN,West Africa,Africa
+SLE,West Africa,Africa
+TGO,West Africa,Africa
+XAD,Western Europe,Europe
+ALA,Western Europe,Europe
+AND,Western Europe,Europe
+AUT,Western Europe,Europe
+BEL,Western Europe,Europe
+DNK,Western Europe,Europe
+FRO,Western Europe,Europe
+FIN,Western Europe,Europe
+FRA,Western Europe,Europe
+DEU,Western Europe,Europe
+GRC,Western Europe,Europe
+ISL,Western Europe,Europe
+IRL,Western Europe,Europe
+IMN,Western Europe,Europe
+ITA,Western Europe,Europe
+JEY,Western Europe,Europe
+LIE,Western Europe,Europe
+LUX,Western Europe,Europe
+MLT,Western Europe,Europe
+NLD,Western Europe,Europe
+NOR,Western Europe,Europe
+PRT,Western Europe,Europe
+ESP,Western Europe,Europe
+SJM,Western Europe,Europe
+SWE,Western Europe,Europe
+CHE,Western Europe,Europe
+GBR,Western Europe,Europe
