@@ -1,20 +1,20 @@
 ---
 title: "Global Cropland Expansion and Soils at Risk"
 author: "Mandy Liesch"
-output:
-  github_document:
-    toc: true
-    toc_depth: 4
-    toc_float:
-      collapsed: false
-      smooth_scroll: false
+
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = TRUE)
 ```
 
+```{r, include=FALSE, eval=FALSE}
+rmarkdown::render("globalAgLand.Rmd", 
+                  output_format = "github_document", 
+                  output_options = list(toc=TRUE, toc_depth = 4, html_preview=FALSE), 
+                  output_file = "README.md")
 
+```
 
 # Purpose
 
