@@ -1,5 +1,6 @@
 ---
 title: "Global Cropland Expansion and Soils at Risk"
+subtitle: "A Terra Tutorial"
 author: "Mandy Liesch"
 
 ---
@@ -24,7 +25,7 @@ A Note on file size:
 
 `terraOptions(tempDir="F:/temp")`
 
-## R Packages
+# R Packages
 ```{r}
 
 library(biscale)
@@ -43,9 +44,9 @@ terraOptions(tempDir="F:/temp")
 ```
 
 
-## Raw Data and Preparations 
+# Raw Data and Preparations 
 
-### Countries
+## Countries
 
 ```{r}
 
@@ -59,7 +60,7 @@ w
 
 
 
-### Soil Grids: Total Soil Carbon Stocks 0-30 cm
+## Soil Grids: Total Soil Carbon Stocks 0-30 cm
 
 [SoilGrids](soilgrids.org) is a system for global digital soil mapping that makes use of global soil profile information and covariate data to model the spatial distribution of soil properties across the globe. SoilGrids is a collections of soil property maps for the world produced using machine learning at 250 m resolution. The [Soil Grids 2.0 FAQs](https://www.isric.org/explore/soilgrids/faq-soilgrids#How_can_I_access_SoilGrids) details the file structure and downloads for both the soil grids data for soil carbon, as well as the uncertainty.
 
@@ -103,7 +104,7 @@ plot(w, bg="transparent", add=TRUE)
 ```
 
 
-### Cropland Extent Changes
+## Cropland Extent Changes
 
 The dataset represents a globally consistent cropland extent time-series at 30-m spatial resolution. Cropland defined as land used for annual and perennial herbaceous crops for human consumption, forage (including hay), and biofuel. It is on the [Global Land Analysis and Discovery](https://glad.umd.edu/dataset/croplands), on a project through the University of Maryland. 
 
@@ -130,9 +131,9 @@ plot(w, bg="transparent", add=TRUE)
 ```
 
 
-## Preliminary Analysis
+# Preliminary Analysis
 
-```{r, eval=FALSE}
+```{r}
 
 shapeSF <- sf::st_as_sf(w)
 
@@ -147,9 +148,9 @@ shapes$cropGains_Mean<-exact_extract(gains, shapes, 'mean')
 
 ```
 
-### Tables by Region
+## Tables by Region
 
-```{r, eval=FALSE}
+```{r}
 
 summary<-na.omit(shapes) 
 summary$geometry<-NULL
@@ -158,6 +159,12 @@ summary$geometry<-NULL
 sumStats <- summary %>%
   group_by(Region) %>%
   summarise_at(vars(totC_Mean, cropGains_Mean), list(name = mean))
+
+```
+
+## Ridgeplots of Regional Data
+
+```{r}
 
 ggplot(summary, aes(x = cropGains_Mean, y = Region)) +
   geom_density_ridges(scale = 4) + 
@@ -176,9 +183,9 @@ ggplot(summary, aes(x = totC_Mean, y = Region)) +
 
 ```
 
-### Bivariate Chloropleth Maps By Region
+## Bivariate Chloropleth Maps By Region
 
-```{r, eval=FALSE}
+```{r}
 shapes<-na.omit(shapes) 
 
 shapes <- bi_class(shapes, x = cropGains_Mean, y = totC_Mean, style = "jenks", dim = 3)
@@ -206,9 +213,9 @@ finalPlot <- ggdraw() +
 
 ```
 
-### Dyanamic Country Results
+## Dyanamic Country Results
 
-```{r, eval=FALSE}
+```{r}
 
 newShape<-shapes
 newShape$geometry<-NULL
