@@ -1,13 +1,20 @@
 ---
-title: "AgLand"
+title: "Global Cropland Expansion and Soils at Risk"
 author: "Mandy Liesch"
-date: "3/17/2022"
-output: html_document
+output:
+  github_document:
+    toc: true
+    toc_depth: 4
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = TRUE)
 ```
+
+
 
 # Purpose
 
@@ -125,7 +132,7 @@ plot(w, bg="transparent", add=TRUE)
 
 ## Preliminary Analysis
 
-```{r}
+```{r, eval=FALSE}
 
 shapeSF <- sf::st_as_sf(w)
 
@@ -142,7 +149,7 @@ shapes$cropGains_Mean<-exact_extract(gains, shapes, 'mean')
 
 ### Tables by Region
 
-```{r}
+```{r, eval=FALSE}
 
 summary<-na.omit(shapes) 
 summary$geometry<-NULL
@@ -160,4 +167,56 @@ ggplot(summary, aes(x = cropGains_Mean, y = Region)) +
   theme_ridges()
 
 
+ggplot(summary, aes(x = totC_Mean, y = Region)) +
+  geom_density_ridges(scale = 4) + 
+  scale_y_discrete(expand = c(0, 0)) +     # will generally have to set the `expand` option
+  scale_x_continuous(expand = c(0, 0)) +   # for both axes to remove unneeded padding
+  coord_cartesian(clip = "off") + # to avoid clipping of the very top of the top ridgeline
+  theme_ridges()
 
+```
+
+### Bivariate Chloropleth Maps By Region
+
+```{r, eval=FALSE}
+shapes<-na.omit(shapes) 
+
+shapes <- bi_class(shapes, x = cropGains_Mean, y = totC_Mean, style = "jenks", dim = 3)
+
+map <- ggplot() +
+  geom_sf(data = shapes, mapping = aes(fill = bi_class), color = "white", size = 0.1, show.legend = FALSE) +
+  bi_scale_fill(pal = "DkBlue", dim = 3) +
+  labs(
+    title = "Cropland Gains and 30 cm Carbon Stocks",
+  ) +
+  bi_theme()
+
+legend <- bi_legend(pal = "DkBlue",
+                    dim = 3,
+                    xlab = "Cropland Gain",
+                    ylab = "Carbon Stocks",
+                    size = 12)
+
+finalPlot <- ggdraw() +
+  draw_plot(map, 0, 0, 1, 1) +
+  draw_plot(legend, 0, 0.2, 0.2, 0.2)
+
+
+
+
+```
+
+### Dyanamic Country Results
+
+```{r, eval=FALSE}
+
+newShape<-shapes
+newShape$geometry<-NULL
+
+highRisk<-newShape %>%
+  filter(bi_class == '3-3'|bi_class == '3-2') %>%
+  select(NAME_0, bi_class, Continent, totC_Mean, cropGains_Mean)
+
+highRisk
+
+```
