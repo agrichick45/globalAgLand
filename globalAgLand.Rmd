@@ -36,6 +36,7 @@ library(geodata)
 library(ggplot2)
 library(ggridges)
 library(rgdal)
+library(rmarkdown)
 library(sf)
 library(terra)
 library(tidyverse)
@@ -209,7 +210,7 @@ finalPlot <- ggdraw() +
   draw_plot(legend, 0, 0.2, 0.2, 0.2)
 
 
-
+finalPlot
 
 ```
 
@@ -230,7 +231,7 @@ highRisk
 
 # Detailed Analysis
 
-```{r, eval=FALSE}}
+```{r, eval=FALSE}
 
 target<-gains>=10
 
@@ -252,7 +253,7 @@ targetMask<-rast("targMask.tif")
 
 ```
 
-```{r}
+```{r, eval=FALSE}
 highCrop<-mask(
 #the first raster is the full raster we are cutting (the soil carbon stocks)
 scStock,
@@ -273,7 +274,10 @@ highCropCh<-rast("highCrop_SOC_Stocks.tif")
 plot(highCropCh)
 plot(w, bg="transparent", add=TRUE)
 
+```
 
+
+```{r}
 shapes$hCCount<-exact_extract(highCropCh, shapes, 'count')
 shapes$hcMean<-exact_extract(highCropCh, shapes, 'mean')
 
