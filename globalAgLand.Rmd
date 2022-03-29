@@ -227,3 +227,58 @@ highRisk<-newShape %>%
 highRisk
 
 ```
+
+# Detailed Analysis
+
+```{r, eval=FALSE}}
+
+target<-gains>=10
+
+
+targMask<-classify(
+#define the raster you are clipping
+target,
+#define the reclassification values (id is 0= not in the 10% or more)
+cbind(id=c(0, 1),
+#these are the raster values, with an id of 0 returning as an NA, otherwise it is 1.
+v=c(NA, 1)),
+filename='targMask.tif')
+
+
+```
+
+```{r}
+targetMask<-rast("targMask.tif")
+
+```
+
+```{r}
+highCrop<-mask(
+#the first raster is the full raster we are cutting (the soil carbon stocks)
+scStock,
+#the second raster is the mask we created in the previous step
+targetMask,
+#If TRUE, areas on mask that are _not_ the maskvalue are masked, since we classified them as NA, this can be set to false
+inverse=FALSE,
+#The value that cells of x should become if they are not covered by mask, set to NA here.
+updatevalue=NA,
+#new creation of a .tif file, with the cut values of soil carbon remaining.
+filename="highCrop_SOC_Stocks.tif")
+
+```
+
+```{r}
+highCropCh<-rast("highCrop_SOC_Stocks.tif")
+
+plot(highCropCh)
+plot(w, bg="transparent", add=TRUE)
+
+
+shapes$hCCount<-exact_extract(highCropCh, shapes, 'count')
+shapes$hcMean<-exact_extract(highCropCh, shapes, 'mean')
+
+shapes$perChange<-(shapes$hCCount/shapes$TotalCount)*100
+
+ggplot(data = shapes) +
+    geom_sf(aes(fill = perChange)) +
+    scale_fill_viridis_c(option = "plasma")
