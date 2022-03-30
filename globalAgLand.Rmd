@@ -163,11 +163,15 @@ sumStats <- summary %>%
 
 ```
 
+```{r}
+sumStats
+```
+
 ## Ridgeplots of Regional Data
 
 ```{r}
 
-ggplot(summary, aes(x = cropGains_Mean, y = Region)) +
+cropGainPlot<-ggplot(summary, aes(x = cropGains_Mean, y = Region)) +
   geom_density_ridges(scale = 4) + 
   scale_y_discrete(expand = c(0, 0)) +     # will generally have to set the `expand` option
   scale_x_continuous(expand = c(0, 0)) +   # for both axes to remove unneeded padding
@@ -175,12 +179,16 @@ ggplot(summary, aes(x = cropGains_Mean, y = Region)) +
   theme_ridges()
 
 
-ggplot(summary, aes(x = totC_Mean, y = Region)) +
+cropGainPlot
+
+SOCPlot<-ggplot(summary, aes(x = totC_Mean, y = Region)) +
   geom_density_ridges(scale = 4) + 
   scale_y_discrete(expand = c(0, 0)) +     # will generally have to set the `expand` option
   scale_x_continuous(expand = c(0, 0)) +   # for both axes to remove unneeded padding
   coord_cartesian(clip = "off") + # to avoid clipping of the very top of the top ridgeline
   theme_ridges()
+
+SOCPlot
 
 ```
 
