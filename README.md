@@ -57,7 +57,7 @@ w <- world(path=tempdir())
 plot(w)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 ``` r
 w
@@ -117,7 +117,7 @@ plot(scStock)
 plot(w, bg="transparent", add=TRUE)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ## Cropland Extent Changes
 
@@ -148,7 +148,7 @@ plot(gains)
 plot(w, bg="transparent", add=TRUE)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 # Preliminary Analysis
 
@@ -228,7 +228,7 @@ cropGainPlot<-ggplot(summary, aes(x = cropGains_Mean, y = Region)) +
 cropGainPlot
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 ``` r
 SOCPlot<-ggplot(summary, aes(x = totC_Mean, y = Region)) +
@@ -241,7 +241,7 @@ SOCPlot<-ggplot(summary, aes(x = totC_Mean, y = Region)) +
 SOCPlot
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-13-2.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-12-2.png)<!-- -->
 
 ## Bivariate Chloropleth Maps By Region
 
@@ -272,7 +272,7 @@ finalPlot <- ggdraw() +
 finalPlot
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
 ## Dyanamic Country Results
 
@@ -341,7 +341,7 @@ plot(highCropCh)
 plot(w, bg="transparent", add=TRUE)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
 ``` r
 shapes$hCCount<-exact_extract(highCropCh, shapes, 'count')
@@ -363,4 +363,58 @@ ggplot(data = shapes) +
     scale_fill_viridis_c(option = "plasma")
 ```
 
+![](README_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+
+``` r
+shapes2<-na.omit(shapes) 
+
+shapes2 <- bi_class(shapes2, x = perChange, y = hcMean, style = "jenks", dim = 3)
+
+map <- ggplot() +
+  geom_sf(data = shapes2, mapping = aes(fill = bi_class), color = "white", size = 0.1, show.legend = FALSE) +
+  bi_scale_fill(pal = "DkBlue", dim = 3) +
+  labs(
+    title = "High Risk Countries and Carbon",
+  ) +
+  bi_theme()
+
+legend <- bi_legend(pal = "DkBlue",
+                    dim = 3,
+                    xlab = "High Change Areas",
+                    ylab = "Carbon Stocks",
+                    size = 12)
+
+finalPlot2 <- ggdraw() +
+  draw_plot(map, 0, 0, 1, 1) +
+  draw_plot(legend, 0, 0.2, 0.2, 0.2)
+
+
+finalPlot2
+```
+
 ![](README_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+
+``` r
+newShape1<-shapes2
+newShape1$geometry<-NULL
+
+highRisk<-newShape1 %>%
+  filter(bi_class == '3-3'|bi_class == '3-2'|bi_class == '2-3'|bi_class == '3-3') %>%
+  select(NAME_0, bi_class, Continent, totC_Mean, perChange)
+
+highRisk
+```
+
+    ##            NAME_0 bi_class     Continent totC_Mean perChange
+    ## 1      Azerbaijan      3-2          Asia  42.91636  25.11263
+    ## 2        Barbados      3-2 North America  53.69674  58.37006
+    ## 3         Estonia      3-3        Europe  66.96027  27.10306
+    ## 4  United Kingdom      2-3        Europe  72.97118  10.38440
+    ## 5     Isle of Man      2-3        Europe  72.40746  10.89843
+    ## 6        Cambodia      3-2          Asia  41.92271  30.22134
+    ## 7       Lithuania      3-2        Europe  40.46164  57.63790
+    ## 8          Latvia      3-2        Europe  53.71252  32.76434
+    ## 9     Netherlands      2-3        Europe  59.25650  14.37528
+    ## 10         Rwanda      3-2        Africa  61.77108  31.66588
+    ## 11         Uganda      3-2        Africa  51.27988  45.13052
+    ## 12        Uruguay      3-3 South America  59.96348  33.77368

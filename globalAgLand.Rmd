@@ -294,3 +294,44 @@ shapes$perChange<-(shapes$hCCount/shapes$TotalCount)*100
 ggplot(data = shapes) +
     geom_sf(aes(fill = perChange)) +
     scale_fill_viridis_c(option = "plasma")
+```
+
+```{r}
+shapes2<-na.omit(shapes) 
+
+shapes2 <- bi_class(shapes2, x = perChange, y = hcMean, style = "jenks", dim = 3)
+
+map <- ggplot() +
+  geom_sf(data = shapes2, mapping = aes(fill = bi_class), color = "white", size = 0.1, show.legend = FALSE) +
+  bi_scale_fill(pal = "DkBlue", dim = 3) +
+  labs(
+    title = "High Risk Countries and Carbon",
+  ) +
+  bi_theme()
+
+legend <- bi_legend(pal = "DkBlue",
+                    dim = 3,
+                    xlab = "High Change Areas",
+                    ylab = "Carbon Stocks",
+                    size = 12)
+
+finalPlot2 <- ggdraw() +
+  draw_plot(map, 0, 0, 1, 1) +
+  draw_plot(legend, 0, 0.2, 0.2, 0.2)
+
+
+finalPlot2
+
+```
+
+```{r}
+newShape1<-shapes2
+newShape1$geometry<-NULL
+
+highRisk<-newShape1 %>%
+  filter(bi_class == '3-3'|bi_class == '3-2'|bi_class == '2-3'|bi_class == '3-3') %>%
+  select(NAME_0, bi_class, Continent, totC_Mean, perChange)
+
+highRisk
+
+```
