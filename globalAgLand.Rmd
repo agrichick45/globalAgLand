@@ -19,13 +19,55 @@ rmarkdown::render("globalAgLand.Rmd",
 
 # Purpose
 
-The purpose of this vignette is looking at the land use changes around the globe by different land use types using  the R Terra Package, masking, zonal statisitics, and visualizations with bivariate cholopleth maps to visualize the cropland gains and losses by country/state. 
+*Scientific Purpose:* There are several causes of [anthropogenic climate changes](https://www.ipcc.ch/site/assets/uploads/2019/08/4.-SPM_Approved_Microsite_FINAL.pdf). Land use change, especially deforestation and cropland expansion, creates several different emissions that contribute to extra carbon dioxide in the atmosphere. The scientific objective of this vignette is to visualize the cropland gains by country, as well as the soil carbon levels of these countries. The second portion of the Vignette focuses only on the pixels that are experiencing greater than 10% conversion into croplands, and their soil carbon content. This second objective identifies which areas are experiencing high levels of conversion, with high carbon. These ares are considered high risk areas.  
+
+*Coding Purpose:* The purpose of this vignette is exploring the functionality of the `Terra` package for manipulating rasters, masking, and clipping. Terra is an evolution to the raster package, and stores information, especially large raster files, into a computer in a way that makes them faster and easier to process. Once these initial processing steps are done, the `exact_extract` and `raster` package to extract the zonal statistics into an attribute table. The terra package has an extract option; however, it is much slower when processing large, and more complex datasets [(though much faster with smaller ones)](https://tmieno2.github.io/R-as-GIS-for-Economists/extraction-speed-comparison.html). Then, these spatVectors will be merged with the coulumns created from the raster values, and visualized with bivariate cholopleth maps in `ggplot`. 
 
 A Note on file size:
+
+A lot of these files, especially the temporary ones are quite large in RAM. There are several ways to deal with this, including the use of [`terraOptions`](https://rdrr.io/github/rspatial/terra/man/tmpFile.html#:~:text=Description,you%20cannot%20provide%20a%20filename.). To get around this, I used an external hard drive (F:/) to change where the temporary Spatraster files are stored using this command. This function eliminated the failures caused by a full temp drive. 
 
 `terraOptions(tempDir="F:/temp")`
 
 # R Packages
+
+## Spatial Processing Packages
+
+The Geospatial Data Abstraction Library (GDAL), is an open source software for reading and writing raster and vector geospatial data formats. It is integrated in many different softwares, and supports many different file types. 
+
+[`rgdal`](https://cran.r-project.org/web/packages/rgdal/rgdal.pdf): This is the R software integration of the Geospatial Data Abstraction Library (GDAL). *Please note that 'rgdal' will be retired by the end of 2023, plan transition to sf/stars/'terra' functions using 'GDAL' and 'PROJ' at your earliest convenience. *
+
+[`gdalUtils`](https://www.rdocumentation.org/packages/gdalUtils/versions/2.0.3.2): This is the developmental raster tool behind the Geospatial Data Abstraction Library (GDAL).
+
+
+
+[`exactextractr`](https://cran.r-project.org/web/packages/exactextractr/exactextractr.pdf): This package allows fast extraction of raster data to shapefiles. 
+
+## Visualization Packages
+
+A Bivariate Chloropleth Maps are a type of thematic visualization that present two or more different numeric values on a single map. The chloropleth map is the most standard of these, with each value (in this case, country), getting classified into a two dimensional matrix (with value 1 determined by one variable, and value 2 determined by the second variable). The legend is divided into smaller boxes where each box represents a unique relationship of the variables (category 1-1, up to category 3-3). To run this analysis, these packages are required: 
+
+[`biscale`](https://cran.r-project.org/web/packages/biscale/biscale.pdf): This method is used with ggplot to create the matrix necessary to make bivariate choloropleth maps. 
+
+[`cowplot`](https://www.rdocumentation.org/packages/cowplot/versions/1.1.1): This package is a generic graphics package that provides help with creating publication-quality figures with ggplot. For the bivariate chloropleth maps, it helps us add the legend and dynamic positioning. There are several other functions it can do.
+
+## Data Manipulation Packages
+There are several packages used for this analysis and visualization: 
+
+
+
+
+
+
+`geodata`
+`ggplot2`
+`ggridges`
+`rgdal`
+`rmarkdown`
+`sf`
+`terra`
+`tidyverse`
+
 ```{r}
 
 library(biscale)
